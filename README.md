@@ -27,7 +27,7 @@ ftwebservice(app, {
 
 ## Options
 
-| Option | Description
+| Option | Description |
 ----------------------
 | `serviceName` | The name of the web service |
 | `serviceDescription` | A short description of the purpose of the service |
@@ -46,8 +46,8 @@ resolved with an array of healthcheck objects. |
 
 A more complete overview of the options in this section can be found here [in the Origami spec](http://origami.ft.com/docs/syntax/web-service-description/)
 
-| Option | Description
-----------------------
+| Option | Description |
+-----------------------
 | `name` | (Optional) The name of the API endpoint (if different from the name
 of the service |
 | `appVersion` | The deployed version of the code for this API endpoint |
