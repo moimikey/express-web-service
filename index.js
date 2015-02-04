@@ -13,8 +13,8 @@ module.exports = function(app, options) {
 	}
 
 	var serviceVersions = opts.serviceVersions;
-	var goodToGoCallback = opts.goodToGoCallback || defaultGoodToGo;
-	var healthcheckCallback = opts.healthcheckCallback || defaultHealthCheck;
+	var goodToGoTest = opts.goodToGoTest || defaultGoodToGo;
+	var healthCheck = opts.healthCheck || defaultHealthCheck;
 
 	// Create static web service description object based on supplied service versions.
 	var indexInfo = {
@@ -51,13 +51,31 @@ module.exports = function(app, options) {
 
 		res.set("Cache-Control", "no-cache");
 		res.set("Content-Type", "text/plain;charset=utf-8");
-		goodToGoCallback(function(error, result) {
-			if (error || result === false) {
-				res.statusCode = 503;
-				res.send("Not OK");
+
+		function notOk() {
+			res.statusCode = 503;
+			res.send("Not OK, see /__health endpoint");
+		}
+
+		function ok() {
+			res.send("OK");
+		}
+
+		// The GTG generation must timeout after 3 seconds and provide notice
+		// of the timeout
+		Promise.race([
+			goodToGoTest(),
+			new Promise(function(resolve, reject) {
+				setTimeout(function() { res.send("gtg status generation timed out\n"); resolve(false) }, 3000);
+			})
+		]).then(function(isOk) {
+			if (isOk) {
+				ok();
 			} else {
-				res.send("OK");
+				notOk();
 			}
+		}).catch(function(e) {
+			notOk();
 		});
 	});
 
@@ -65,7 +83,7 @@ module.exports = function(app, options) {
 		res.set('Cache-Control', 'no-cache');
 		res.set('Content-Type', 'application/json;charset=utf-8');
 
-		healthcheckCallback(function(error, checks) {
+		healthCheck().then(function(checks) {
 			// Construct a new object
 			var healthcheck = {
 				schemaVersion: 1,
@@ -75,18 +93,16 @@ module.exports = function(app, options) {
 			};
 
 			res.json(healthcheck);
+		}).catch(function(e) {
+			// TODO
 		});
 	});
 
-	function defaultHealthCheck(cb) {
-		process.nextTick(function() {
-			cb(null, []);
-		});
+	function defaultHealthCheck() {
+		return Promise.resolve([]);
 	}
 
-	function defaultGoodToGo(cb) {
-		process.nextTick(function() {
-			cb(null, true);
-		});
+	function defaultGoodToGo() {
+		return Promise.resolve(true);
 	}
 };
