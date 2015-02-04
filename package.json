@@ -1,4 +1,5 @@
 {
+	"name": "express-ftwebservice",
 	"description": "Install FT Web Standard web service descriptions in an Express.js application",
 	"repository": "None"
 }
