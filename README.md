@@ -28,7 +28,7 @@ ftwebservice(app, {
 ## Options
 
 | Option | Description |
-----------------------
+|--------|-------------|
 | `serviceName` | The name of the web service |
 | `serviceDescription` | A short description of the purpose of the service |
 | `serviceVersions` | An object mapping service versions to their service
