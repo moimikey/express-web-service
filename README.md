@@ -3,7 +3,7 @@
 Install routes for `__gtg`, `__health`, `__about` and version endpoints given
 a configuration.
 
-## Usage
+# Example
 
 Basic example:
 
@@ -24,3 +24,41 @@ ftwebservice(app, {
 	}
 });
 ```
+
+## Options
+
+| Option | Description
+----------------------
+| `serviceName` | The name of the web service |
+| `serviceDescription` | A short description of the purpose of the service |
+| `serviceVersions` | An object mapping service versions to their service
+descriptions.  See service version descriptions. |
+| `goodToGoTest` | (Optional) A function that can be used to indicate the
+good to go status of the service, the function should return a Promise
+resolved with `true` to indicate a positive good to go status, and `false` to
+indicate a negative good to go status. |
+| `healthCheck` | (Optional) A function that can be used to generate
+structured healthcheck information, the function should return a Promise
+resolved with an array of healthcheck objects. |
+
+
+## Service version descriptions
+
+A more complete overview of the options in this section can be found here [in the Origami spec](http://origami.ft.com/docs/syntax/web-service-description/)
+
+| Option | Description
+----------------------
+| `name` | (Optional) The name of the API endpoint (if different from the name
+of the service |
+| `appVersion` | The deployed version of the code for this API endpoint |
+| `dateCreated` | The date this version of the API was first released |
+| `support` | The support URL or email address. See
+[support](http://origami.ft.com/docs/syntax/origamijson/) in the Origami spec.
+|
+| `supportStatus` | The support status of the API version.  See
+[supportStatus](http://origami.ft.com/docs/syntax/origamijson/)  in the
+Origami spec.
+
+# License
+
+MIT
