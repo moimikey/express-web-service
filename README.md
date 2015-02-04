@@ -25,6 +25,45 @@ ftwebservice(app, {
 });
 ```
 
+Example with Good To Go logic and Healthcheck logic:
+
+```JS
+ftwebservice(app, {
+	serviceName: "my-useful-service",
+	serviceDesciption: "A useful description of my useful service.",
+	serviceVersions: {
+		v1: {
+			dateCreated: new Date(2015, 1, 22),
+			support: 'your.support.email@example.com',
+			supportStatus: 'active'
+		}
+	},
+	goodToGo: function() {
+		return new Promise(function(resolve, reject) {
+			resolve(isApplicationHappy());
+		});
+	},
+	healthCheck: function() {
+		// You might have several async checks that you need to perform or
+		// collect the results from, this is a really simplistic example
+		return new Promise(function(resolve, reject) {
+			resolve([
+				{
+					name: "Database TCP connectivity",
+					ok: false,
+					severity: 2,
+					businessImpact: "Article pages will not be available",
+					technicalSummary: "The database is dead",
+					panicGuide: "Check the health status of the database at host <database host>",
+					checkOutput: "tcp connect failed after 10 seconds on destination port 3306 - destination unreachable",
+					lastUpdated: new Date().toISOString()
+				}
+			]);
+		});
+	}
+});
+```
+
 ## Options
 
 | Option | Description |
