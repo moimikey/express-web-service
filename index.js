@@ -63,12 +63,14 @@ module.exports = function(app, options) {
 
 		// The GTG generation must timeout after 3 seconds and provide notice
 		// of the timeout
+		var goodToGoTimeout;
 		Promise.race([
 			goodToGoTest(),
 			new Promise(function(resolve, reject) {
-				setTimeout(function() { res.send("gtg status generation timed out\n"); resolve(false) }, 3000);
+				goodToGoTimeout = setTimeout(function() { res.send("gtg status generation timed out\n"); resolve(false) }, 3000);
 			})
 		]).then(function(isOk) {
+			clearTimeout(goodToGoTimeout);
 			if (isOk) {
 				ok();
 			} else {
