@@ -2,5 +2,5 @@
   "name": "express-ftwebservice",
   "description": "Install FT Web Standard web service descriptions in an Express.js application",
   "repository": "None",
-  "version": "1.0.0"
+  "version": "1.1.1"
 }

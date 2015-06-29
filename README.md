@@ -14,7 +14,7 @@ var app = express();
 
 ftwebservice(app, {
 	serviceName: "my-useful-service",
-	serviceDesciption: "A useful description of my useful service.",
+	serviceDescription: "A useful description of my useful service.",
 	serviceVersions: {
 		v1: {
 			dateCreated: new Date(2015, 1, 22),
@@ -30,7 +30,7 @@ Example with Good To Go logic and Healthcheck logic:
 ```JS
 ftwebservice(app, {
 	serviceName: "my-useful-service",
-	serviceDesciption: "A useful description of my useful service.",
+	serviceDescription: "A useful description of my useful service.",
 	serviceVersions: {
 		v1: {
 			dateCreated: new Date(2015, 1, 22),
