@@ -38,7 +38,7 @@ ftwebservice(app, {
 			supportStatus: 'active'
 		}
 	},
-	goodToGo: function() {
+	goodToGoTest: function() {
 		return new Promise(function(resolve, reject) {
 			resolve(isApplicationHappy());
 		});
