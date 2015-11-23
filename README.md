@@ -1,26 +1,26 @@
 # Express FT Web Service Description
 
-Install routes for `__gtg`, `__health`, `__about` and version endpoints given
-a configuration.
+Installs routes for `/__gtg`, `/__health`, and `/__about`.
 
 # Example
 
 Basic example:
 
 ```JS
+var path = require('path');
 var ftwebservice = require('ftwebservice');
 var express = require('express');
 var app = express();
 
 ftwebservice(app, {
-	serviceName: "my-useful-service",
-	serviceDescription: "A useful description of my useful service.",
-	serviceVersions: {
-		v1: {
-			dateCreated: new Date(2015, 1, 22),
-			support: 'your.support.email@example.com',
-			supportStatus: 'active'
-		}
+	manifestPath: path.join(__dirname, 'package.json')
+	about: {
+		"schemaVersion": 1,
+		"name": "build-service",
+		"purpose": "Front end build process as a service.  Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.",
+		"audience": "public",
+		"primaryUrl": "https://build.origami.ft.com",
+		"serviceTier": "gold"
 	}
 });
 ```
@@ -29,15 +29,15 @@ Example with Good To Go logic and Healthcheck logic:
 
 ```JS
 ftwebservice(app, {
-	serviceName: "my-useful-service",
-	serviceDescription: "A useful description of my useful service.",
-	serviceVersions: {
-		v1: {
-			dateCreated: new Date(2015, 1, 22),
-			support: 'your.support.email@example.com',
-			supportStatus: 'active'
-		}
-	},
+	manifestPath: path.join(__dirname, 'package.json')
+	about: {
+		"schemaVersion": 1,
+		"name": "build-service",
+		"purpose": "Front end build process as a service.  Fetches specified Origami components from git, runs Origami build process, and returns the resulting CSS or JS bundle over HTTP.",
+		"audience": "public",
+		"primaryUrl": "https://build.origami.ft.com",
+		"serviceTier": "gold"
+	}
 	goodToGoTest: function() {
 		return new Promise(function(resolve, reject) {
 			resolve(isApplicationHappy());
@@ -68,24 +68,10 @@ ftwebservice(app, {
 
 | Option | Description |
 |--------|-------------|
-| `serviceName` | The name of the web service |
-| `serviceDescription` | A short description of the purpose of the service |
-| `serviceVersions` | An object mapping service versions to their service descriptions.  See service version descriptions. |
+| `manifestPath` | (Optional) Path to the app's package.json file. This will be used to populate the `appVersion` and `dateDeployed` properties of the /__about endpoint, if they are not specified explicitly. |
+| `about` | (Optional) Object containing standard runbook propeties as defined in the [FT Runbook standard](https://docs.google.com/document/d/1B80a0nAI8L1cuIlSEai4Zuztq7Lef0ytxJYNFCjG7Ko/edit#) |
 | `goodToGoTest` | (Optional) A function that can be used to indicate the good to go status of the service, the function should return a Promise resolved with `true` to indicate a positive good to go status, and `false` to indicate a negative good to go status. |
 | `healthCheck` | (Optional) A function that can be used to generate structured healthcheck information, the function should return a Promise resolved with an array of healthcheck objects. |
-
-
-## Service version descriptions
-
-A more complete overview of the options in this section can be found here [in the Origami spec](http://origami.ft.com/docs/syntax/web-service-description/)
-
-| Option | Description |
-|--------|-------------|
-| `name` | (Optional) The name of the API endpoint (if different from the name of the service |
-| `appVersion` | The deployed version of the code for this API endpoint |
-| `dateCreated` | The date this version of the API was first released |
-| `support` | The support URL or email address. See [support](http://origami.ft.com/docs/syntax/origamijson/) in the Origami spec. |
-| `supportStatus` | The support status of the API version.  See [supportStatus](http://origami.ft.com/docs/syntax/origamijson/)  in the Origami spec. |
 
 # License
 
