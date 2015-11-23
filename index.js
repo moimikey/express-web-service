@@ -1,8 +1,23 @@
 module.exports = function(app, options) {
 	var opts = options || {};
 
-	var goodToGoTest = opts.goodToGoTest || defaultGoodToGo;
-	var healthCheck = opts.healthCheck || defaultHealthCheck;
+	opts.goodToGoTest = opts.goodToGoTest || defaultGoodToGo;
+	opts.healthCheck = opts.healthCheck || defaultHealthCheck;
+	opts.about = opts.about || {};
+
+	if (opts.manifestPath && !opts.about.dateDeployed) {
+		require('fs').stat(opts.manifestPath, function(err, stat) {
+			opts.about.dateDeployed = stat.mtime;
+		});
+	}
+
+	if (opts.manifestPath && !opts.about.appVersion) {
+		opts.about.appVersion = require(opts.manifestPath).version;
+	}
+
+	if (!opts.about.hostname) {
+		opts.about.hostname = require("os").hostname();
+	}
 
 	app.get(/^\/__about$/, function(req, res) {
 		res.json(opts.about || {});
