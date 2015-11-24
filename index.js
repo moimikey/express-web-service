@@ -41,7 +41,7 @@ module.exports = function(app, options) {
 		// of the timeout
 		var goodToGoTimeout;
 		Promise.race([
-			goodToGoTest(),
+			opts.goodToGoTest(),
 			new Promise(function(resolve, reject) {
 				goodToGoTimeout = setTimeout(function() {
 					res.send("gtg status generation timed out\n");
@@ -64,7 +64,7 @@ module.exports = function(app, options) {
 		res.set('Cache-Control', 'no-store');
 		res.set('Content-Type', 'application/json;charset=utf-8');
 
-		healthCheck().then(function(checks) {
+		opts.healthCheck().then(function(checks) {
 			res.json({
 				schemaVersion: 1,
 				name: serviceName,
