@@ -8,7 +8,7 @@ Basic example:
 
 ```JS
 var path = require('path');
-var ftwebservice = require('ftwebservice');
+var ftwebservice = require('express-ftwebservice');
 var express = require('express');
 var app = express();
 
