@@ -5,6 +5,13 @@ module.exports = function(app, options) {
 	opts.healthCheck = opts.healthCheck || defaultHealthCheck;
 	opts.about = opts.about || {};
 
+	// Backwards compat
+	if (opts.about.hostname) {
+		opts.about._hostname = opts.about.hostname;
+		delete opts.about.hostname;
+	}
+
+
 	if (opts.manifestPath && !opts.about.dateDeployed) {
 		require('fs').stat(opts.manifestPath, function(err, stat) {
 			opts.about.dateDeployed = stat.mtime;
@@ -15,8 +22,8 @@ module.exports = function(app, options) {
 		opts.about.appVersion = require(opts.manifestPath).version;
 	}
 
-	if (!opts.about.hostname) {
-		opts.about.hostname = require("os").hostname();
+	if (!opts.about._hostname) {
+		opts.about._hostname = require("os").hostname();
 	}
 
 	app.get(/^\/__about$/, function(req, res) {
