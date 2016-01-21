@@ -83,6 +83,10 @@ module.exports = function(app, options) {
 		});
 	});
 
+	app.get(/\/__error$/, function(req, res) {
+		throw new Error("Intentional test error thrown from /__error route");
+	});
+
 	function defaultHealthCheck() {
 		return Promise.resolve([]);
 	}
