@@ -1,6 +1,28 @@
 # Express FT Web Service Description
 
-Installs routes for `/__gtg`, `/__health`, and `/__about`.
+Installs routes for `/__gtg`, `/__health`, `/__about` and `/__error`.
+
+## Good to go
+
+Conforms to the [FT Good to go standard](https://docs.google.com/document/d/11paOrAIl9eIOqUEERc9XMaaL3zouJDdkmb-gExYFnw0/edit), emitting a `200 OK` response if the application should be considered healthy, and `503 Service Unavailable` if it should not. This is intended to be used to make routing decisions.
+
+Always returns `200 OK` unless a `goodToGoTest` option is specified.
+
+## Health check
+
+Conforms to the [FT Healthcheck standard](https://docs.google.com/document/d/18hefJjImF5IFp9WvPAm9Iq5_GmWzI9ahlKSzShpQl1s/edit), returning JSON data summarising the current health status of the application.
+
+Always returns a 'blank' healthcheck response (ie a valid healthcheck response with no checks) unless the `healthCheck` option is specified.
+
+## About
+
+Conforms to the (at time of writing, draft) [FT About endpoint standard](https://docs.google.com/document/d/1B80a0nAI8L1cuIlSEai4Zuztq7Lef0ytxJYNFCjG7Ko/edit), returning JSON data describing the application, and providing links to all relevant dashboards and support documentation resources.
+
+The information emitted by the about endpoint is populated from the `about` option.  The `_hostname` and `appVersion` fields will be populated automatically if not present in the data passed in through the `about` option.
+
+## Error
+
+This endpoint simply throws a JavaScript error, and makes no attempt to handle it. This is useful for testing the way that your application handles runtime errors in prod, both in terms of reporting them (eg to a logging or aggregation tool) and presenting an appropriate UI to the end user.
 
 # Example
 
@@ -64,7 +86,7 @@ ftwebservice(app, {
 });
 ```
 
-## Options
+# Options
 
 | Option | Description |
 |--------|-------------|
