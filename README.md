@@ -94,6 +94,7 @@ ftwebservice(app, {
 | `about` | (Optional) Object containing standard runbook propeties as defined in the [FT Runbook standard](https://docs.google.com/document/d/1B80a0nAI8L1cuIlSEai4Zuztq7Lef0ytxJYNFCjG7Ko/edit#) |
 | `goodToGoTest` | (Optional) A function that can be used to indicate the good to go status of the service, the function should return a Promise resolved with `true` to indicate a positive good to go status, and `false` to indicate a negative good to go status. |
 | `healthCheck` | (Optional) A function that can be used to generate structured healthcheck information, the function should return a Promise resolved with an array of healthcheck objects. |
+| `routes` | (Optional) An array of routes to install.  Possible values are `health`, `gtg`, `about` and `error`.  Defaults to `["health", "gtg", "about"]`|
 
 # License
 
