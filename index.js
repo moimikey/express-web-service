@@ -81,7 +81,7 @@ module.exports = function(app, options) {
 				res.json({
 					schemaVersion: 1,
 					name: opts.about.name,
-                    systemCode: opts.about.systemCode || opts.about.name,
+                    			systemCode: opts.about.systemCode || opts.about.name,
 					description: opts.about.purpose,
 					checks: checks
 				});
