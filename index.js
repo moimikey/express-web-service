@@ -55,16 +55,19 @@ module.exports = function(app, options) {
 				opts.goodToGoTest(),
 				new Promise(function(resolve, reject) {
 					goodToGoTimeout = setTimeout(function() {
-						res.send("gtg status generation timed out\n");
-						resolve(false);
+						resolve('timeout');
 					}, 3000);
 				})
-			]).then(function(isOk) {
+			]).then(function(status) {
 				clearTimeout(goodToGoTimeout);
-				if (isOk) {
-					ok();
+				if (status === 'timeout') {
+					res.send("gtg status generation timed out\n");
 				} else {
-					notOk();
+					if (status) {
+						ok();
+					} else {
+						notOk();
+					}
 				}
 			}).catch(function(e) {
 				notOk();
@@ -81,6 +84,7 @@ module.exports = function(app, options) {
 				res.json({
 					schemaVersion: 1,
 					name: opts.about.name,
+                    			systemCode: opts.about.systemCode || opts.about.name,
 					description: opts.about.purpose,
 					checks: checks
 				});
