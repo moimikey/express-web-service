@@ -2,5 +2,5 @@
   "name": "express-ftwebservice",
   "description": "Install FT Web Standard web service descriptions in an Express.js application",
   "repository": "https://github.com/Financial-Times/express-web-service",
-  "version": "2.2.0"
+  "version": "2.2.1"
 }
