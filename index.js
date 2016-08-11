@@ -29,6 +29,7 @@ module.exports = function(app, options) {
 
 	if (opts.routes.indexOf('about') !== -1) {
 		app.get(/^\/__about$/, function(req, res) {
+			res.set('Cache-Control', 'no-store');
 			res.json(opts.about || {});
 		});
 	}
