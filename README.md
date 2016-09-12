@@ -35,7 +35,7 @@ var express = require('express');
 var app = express();
 
 ftwebservice(app, {
-	manifestPath: path.join(__dirname, 'package.json')
+	manifestPath: path.join(__dirname, 'package.json'),
 	about: {
 		"schemaVersion": 1,
 		"name": "build-service",
@@ -51,7 +51,7 @@ Example with Good To Go logic and Healthcheck logic:
 
 ```JS
 ftwebservice(app, {
-	manifestPath: path.join(__dirname, 'package.json')
+	manifestPath: path.join(__dirname, 'package.json'),
 	about: {
 		"schemaVersion": 1,
 		"name": "build-service",
@@ -59,7 +59,7 @@ ftwebservice(app, {
 		"audience": "public",
 		"primaryUrl": "https://origami-build.ft.com",
 		"serviceTier": "gold"
-	}
+	},
 	goodToGoTest: function() {
 		return new Promise(function(resolve, reject) {
 			resolve(isApplicationHappy());
