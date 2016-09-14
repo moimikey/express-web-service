@@ -4,7 +4,7 @@ module.exports = function(app, options) {
 	opts.goodToGoTest = opts.goodToGoTest || defaultGoodToGo;
 	opts.healthCheck = opts.healthCheck || defaultHealthCheck;
 	opts.about = opts.about || {};
-	opts.routes = opts.routes || ['about', 'gtg', 'health'];
+	opts.routes = opts.routes || ['about', 'gtg', 'health', 'error'];
 
 	// Backwards compat
 	if (opts.about.hostname) {
